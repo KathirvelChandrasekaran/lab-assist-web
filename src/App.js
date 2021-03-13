@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Navbar from "./components/navbar";
+import Login from "./pages/login";
+import { BrowserRouter, Route } from "react-router-dom";
+import Admin from "./pages/admin";
+import Home from "./pages/home";
+import ApproveHardware from "./pages/approveHardware";
+import ApproveSoftware from "./pages/approveSoftware";
+import ApproveRemote from "./pages/approveRemote";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Navbar />
+        <Route exact path="/login" component={Login} />
+        <Route path="/admin" component={Admin} />
+        <Route path="/home" component={Home} />
+        <Route path="/approveHardware" component={ApproveHardware} />
+        <Route path="/approveSoftware" component={ApproveSoftware} />
+        <Route path="/approveRemote" component={ApproveRemote} />
+      </div>
+    </BrowserRouter>
   );
 }
 
