@@ -7,6 +7,8 @@ import Home from "./pages/home";
 import ApproveHardware from "./pages/approveHardware";
 import ApproveSoftware from "./pages/approveSoftware";
 import ApproveRemote from "./pages/approveRemote";
+import ViewStudents from "./pages/viewStudents";
+import AddStudent from "./pages/addStudent";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/approveHardware" component={ApproveHardware} />
         <Route path="/approveSoftware" component={ApproveSoftware} />
         <Route path="/approveRemote" component={ApproveRemote} />
+        <Route path="/viewStudents" component={ViewStudents} />
+        <Route path="/addStudent" component={AddStudent} />
       </div>
     </BrowserRouter>
   );

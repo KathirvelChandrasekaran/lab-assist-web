@@ -10,10 +10,14 @@ import {
   CardMedia,
   GridList,
   Button,
+  Fab,
+  Tooltip,
 } from "@material-ui/core";
+import { VpnKey, Add, Visibility } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import hardware from "../assets/hardware.svg";
 import software from "../assets/software.svg";
+import empty from "../assets/empty.svg";
 import remoteA from "../assets/remote.svg";
 import fire from "../config/firebase";
 
@@ -94,8 +98,54 @@ const Admin = (props) => {
       });
   }, []);
 
+  var hwCount = Object.keys(hardwares).length;
+  var swCount = Object.keys(softwares).length;
+  var rmCount = Object.keys(remote).length;
   return (
     <div style={{ marginTop: "8em" }}>
+      <div>
+        <Tooltip title="Reset Password">
+          <Fab
+            color="primary"
+            aria-label="add"
+            style={{
+              float: "right",
+              marginRight: "2em",
+              backgroundColor: "#D64550",
+            }}
+          >
+            <VpnKey />
+          </Fab>
+        </Tooltip>
+        <Tooltip title="Add Student">
+          <Fab
+            color="primary"
+            aria-label="add"
+            style={{
+              float: "right",
+              marginRight: "2em",
+              backgroundColor: "#D64550",
+            }}
+            onClick={() => props.history.push("/addStudent")}
+          >
+            <Add />
+          </Fab>
+        </Tooltip>
+        <Tooltip title="View All Student">
+          <Fab
+            color="primary"
+            aria-label="add"
+            style={{
+              float: "right",
+              marginRight: "2em",
+              backgroundColor: "#D64550",
+            }}
+            onClick={() => props.history.push("/viewStudents")}
+          >
+            <Visibility />
+          </Fab>
+        </Tooltip>
+      </div>
       <div style={{ height: "30em" }}>
         <Typography variant="h4" gutterBottom>
           Hardware Requests
@@ -103,60 +153,70 @@ const Admin = (props) => {
         <div style={{ margin: "1em" }}>
           <div>
             <div>
-              <GridList className={classes.gridList} cols={4.5}>
-                {hardwares.map((data) => {
-                  return (
-                    <Card
-                      style={{ margin: "1em", height: "20em" }}
-                      className={classes.root}
-                      // onClick={handleHardware(data.requestedBy)}
-                    >
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          alt="Contemplative Reptile"
-                          height="150"
-                          image={hardware}
-                          title="Contemplative Reptile"
-                        />
-                        <CardContent>
-                          <Typography gutterBottom variant="h5" component="h2">
-                            {data.PCID}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
+              {hwCount < 1 ? (
+                <div style={{ margin: "5em" }}>
+                  <img style={{ height: "15em" }} src={empty} alt="" />
+                </div>
+              ) : (
+                <GridList className={classes.gridList} cols={4.5}>
+                  {hardwares.map((data) => {
+                    return (
+                      <Card
+                        style={{ margin: "1em", height: "20em", width: "18em" }}
+                        className={classes.root}
+                        // onClick={handleHardware(data.requestedBy)}
+                      >
+                        <CardActionArea>
+                          <CardMedia
+                            component="img"
+                            alt="Contemplative Reptile"
+                            height="150"
+                            image={hardware}
+                            title="Contemplative Reptile"
+                          />
+                          <CardContent>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="h2"
+                            >
+                              {data.PCID}
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              component="p"
+                            >
+                              {data.requestedBy}
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
+                        <CardActions>
+                          <Button
+                            color="inherit"
+                            component={Link}
+                            to={{
+                              pathname: "/approveHardware",
+                              state: {
+                                roll: data.requestedBy,
+                                request: data.request,
+                                pcID: data.PCID,
+                                item1: data.items,
+                                item2: data.item2,
+                                item3: data.item3,
+                                item4: data.item4,
+                                item5: data.item5,
+                              },
+                            }}
                           >
-                            {data.requestedBy}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                      <CardActions>
-                        <Button
-                          color="inherit"
-                          component={Link}
-                          to={{
-                            pathname: "/approveHardware",
-                            state: {
-                              roll: data.requestedBy,
-                              request: data.request,
-                              pcID: data.PCID,
-                              item1: data.items,
-                              item2: data.item2,
-                              item3: data.item3,
-                              item4: data.item4,
-                              item5: data.item5,
-                            },
-                          }}
-                        >
-                          edit
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  );
-                })}
-              </GridList>
+                            edit
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    );
+                  })}
+                </GridList>
+              )}
             </div>
           </div>
         </div>
@@ -168,60 +228,70 @@ const Admin = (props) => {
         <div style={{ margin: "5em" }}>
           <div>
             <div>
-              <GridList className={classes.gridList} cols={4.5}>
-                {softwares.map((data) => {
-                  return (
-                    <Card
-                      style={{ margin: "1em", height: "20em" }}
-                      className={classes.root}
-                      // onClick={handleHardware(data.requestedBy)}
-                    >
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          alt="Contemplative Reptile"
-                          height="150"
-                          image={hardware}
-                          title="Contemplative Reptile"
-                        />
-                        <CardContent>
-                          <Typography gutterBottom variant="h5" component="h2">
-                            {data.PCID}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
+              {swCount < 1 ? (
+                <div style={{ margin: "5em" }}>
+                  <img style={{ height: "15em" }} src={empty} alt="" />
+                </div>
+              ) : (
+                <GridList className={classes.gridList} cols={4.5}>
+                  {softwares.map((data) => {
+                    return (
+                      <Card
+                        style={{ margin: "1em", height: "20em" }}
+                        className={classes.root}
+                        // onClick={handleHardware(data.requestedBy)}
+                      >
+                        <CardActionArea>
+                          <CardMedia
+                            component="img"
+                            alt="Contemplative Reptile"
+                            height="150"
+                            image={software}
+                            title="Contemplative Reptile"
+                          />
+                          <CardContent>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="h2"
+                            >
+                              {data.PCID}
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              component="p"
+                            >
+                              {data.requestedBy}
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
+                        <CardActions>
+                          <Button
+                            color="inherit"
+                            component={Link}
+                            to={{
+                              pathname: "/approveSoftware",
+                              state: {
+                                roll: data.requestedBy,
+                                request: data.request,
+                                pcID: data.PCID,
+                                item1: data.items,
+                                item2: data.item2,
+                                item3: data.item3,
+                                item4: data.item4,
+                                item5: data.item5,
+                              },
+                            }}
                           >
-                            {data.requestedBy}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                      <CardActions>
-                        <Button
-                          color="inherit"
-                          component={Link}
-                          to={{
-                            pathname: "/approveSoftware",
-                            state: {
-                              roll: data.requestedBy,
-                              request: data.request,
-                              pcID: data.PCID,
-                              item1: data.items,
-                              item2: data.item2,
-                              item3: data.item3,
-                              item4: data.item4,
-                              item5: data.item5,
-                            },
-                          }}
-                        >
-                          edit
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  );
-                })}
-              </GridList>
+                            edit
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    );
+                  })}
+                </GridList>
+              )}
             </div>
           </div>
         </div>
@@ -233,53 +303,63 @@ const Admin = (props) => {
         <div style={{ margin: "1em" }}>
           <div>
             <div>
-              <GridList className={classes.gridList} cols={4.5}>
-                {remote.map((data) => {
-                  return (
-                    <Card
-                      style={{ margin: "1em", height: "20em" }}
-                      className={classes.root}
-                    >
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          alt="Contemplative Reptile"
-                          height="100"
-                          image={remoteA}
-                          title="Contemplative Reptile"
-                        />
-                        <CardContent>
-                          <Typography gutterBottom variant="h5" component="h2">
-                            {data.reason}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
+              {rmCount < 1 ? (
+                <div style={{ margin: "5em" }}>
+                  <img style={{ height: "15em" }} src={empty} alt="" />
+                </div>
+              ) : (
+                <GridList className={classes.gridList} cols={4.5}>
+                  {remote.map((data) => {
+                    return (
+                      <Card
+                        style={{ margin: "1em", height: "20em" }}
+                        className={classes.root}
+                      >
+                        <CardActionArea>
+                          <CardMedia
+                            component="img"
+                            alt="Contemplative Reptile"
+                            height="100"
+                            image={remoteA}
+                            title="Contemplative Reptile"
+                          />
+                          <CardContent>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="h2"
+                            >
+                              {data.reason}
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              component="p"
+                            >
+                              {data.userName}
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
+                        <CardActions>
+                          <Button
+                            color="inherit"
+                            component={Link}
+                            to={{
+                              pathname: "/approveRemote",
+                              state: {
+                                roll: data.userName,
+                                request: data.reason,
+                              },
+                            }}
                           >
-                            {data.userName}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                      <CardActions>
-                        <Button
-                          color="inherit"
-                          component={Link}
-                          to={{
-                            pathname: "/approveRemote",
-                            state: {
-                              roll: data.userName,
-                              request: data.reason,
-                            },
-                          }}
-                        >
-                          edit
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  );
-                })}
-              </GridList>
+                            edit
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    );
+                  })}
+                </GridList>
+              )}
             </div>
           </div>
         </div>

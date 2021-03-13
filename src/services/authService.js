@@ -28,3 +28,12 @@ export async function authentication(userName, password, role, props) {
     } else return "failed";
   });
 }
+
+export async function addUser(userName, password, props) {
+  await db.collection("Students").add({
+    userName: userName,
+    password: password,
+    role: "student",
+  });
+  props.history.push("/admin");
+}

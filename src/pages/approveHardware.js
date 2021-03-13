@@ -89,7 +89,7 @@ export const ApproveHardware = (props) => {
       {hardwares.map((data) => {
         return (
           <Card
-            style={{ margin: "5em", height: "32em" }}
+            style={{ margin: "5em", height: "38em" }}
             className={classes.root}
           >
             <CardActionArea>
