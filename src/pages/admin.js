@@ -113,6 +113,7 @@ const Admin = (props) => {
               marginRight: "2em",
               backgroundColor: "#D64550",
             }}
+            onClick={() => props.history.push("/resetPassword")}
           >
             <VpnKey />
           </Fab>

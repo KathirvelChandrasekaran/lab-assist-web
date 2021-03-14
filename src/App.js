@@ -9,6 +9,7 @@ import ApproveSoftware from "./pages/approveSoftware";
 import ApproveRemote from "./pages/approveRemote";
 import ViewStudents from "./pages/viewStudents";
 import AddStudent from "./pages/addStudent";
+import ResetPassword from "./pages/resetPassword";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/approveRemote" component={ApproveRemote} />
         <Route path="/viewStudents" component={ViewStudents} />
         <Route path="/addStudent" component={AddStudent} />
+        <Route path="/resetPassword" component={ResetPassword} />
       </div>
     </BrowserRouter>
   );
