@@ -35,13 +35,28 @@ function SecuredRoute(props) {
   );
 }
 
+function SecuredAdminRoute(props) {
+  return (
+    <Route
+      path={props.path}
+      render={(data) =>
+        authentication.getLogInStatus() === "admin" ? (
+          <props.component {...data}></props.component>
+        ) : (
+          <Redirect to={{ pathname: "/" }}></Redirect>
+        )
+      }
+    ></Route>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <Navbar />
         <Route exact path="/login" component={Login} />
-        <SecuredRoute path="/admin" component={Admin} />
+        <SecuredAdminRoute path="/admin" component={Admin} />
         <SecuredRoute path="/home" component={Home} />
         <SecuredRoute path="/approveHardware" component={ApproveHardware} />
         <SecuredRoute path="/approveSoftware" component={ApproveSoftware} />

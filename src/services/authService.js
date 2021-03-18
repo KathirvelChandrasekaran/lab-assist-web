@@ -11,7 +11,7 @@ export async function authentication(userName, password, role, props) {
           userName === doc.data()["userName"] &&
           password === doc.data()["password"]
         ) {
-          localStorage.setItem("authState", "true");
+          localStorage.setItem("authState", "admin");
           props.history.push("/admin");
         } else return "adminFailed";
       }
