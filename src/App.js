@@ -1,7 +1,7 @@
 import "./App.css";
 import Navbar from "./components/navbar";
 import Login from "./pages/login";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import Admin from "./pages/admin";
 import Home from "./pages/home";
 import ApproveHardware from "./pages/approveHardware";
@@ -14,23 +14,50 @@ import CreateHardwareRequest from "./pages/createHardwareRequest";
 import CreateSoftwareRequest from "./pages/createSoftwareRequest";
 import CreateRemoteRequest from "./pages/createRemoteAccess";
 
+const authentication = {
+  isLoggedIn: localStorage.getItem("authState"),
+  getLogInStatus() {
+    return this.isLoggedIn;
+  },
+};
+function SecuredRoute(props) {
+  return (
+    <Route
+      path={props.path}
+      render={(data) =>
+        authentication.getLogInStatus() != null ? (
+          <props.component {...data}></props.component>
+        ) : (
+          <Redirect to={{ pathname: "/" }}></Redirect>
+        )
+      }
+    ></Route>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <Navbar />
         <Route exact path="/login" component={Login} />
-        <Route path="/admin" component={Admin} />
-        <Route path="/home" component={Home} />
-        <Route path="/approveHardware" component={ApproveHardware} />
-        <Route path="/approveSoftware" component={ApproveSoftware} />
-        <Route path="/approveRemote" component={ApproveRemote} />
-        <Route path="/viewStudents" component={ViewStudents} />
-        <Route path="/addStudent" component={AddStudent} />
-        <Route path="/resetPassword" component={ResetPassword} />
-        <Route path="/createHardware" component={CreateHardwareRequest} />
-        <Route path="/createSoftware" component={CreateSoftwareRequest} />
-        <Route path="/createRemote" component={CreateRemoteRequest} />
+        <SecuredRoute path="/admin" component={Admin} />
+        <SecuredRoute path="/home" component={Home} />
+        <SecuredRoute path="/approveHardware" component={ApproveHardware} />
+        <SecuredRoute path="/approveSoftware" component={ApproveSoftware} />
+        <SecuredRoute path="/approveRemote" component={ApproveRemote} />
+        <SecuredRoute path="/viewStudents" component={ViewStudents} />
+        <SecuredRoute path="/addStudent" component={AddStudent} />
+        <SecuredRoute path="/resetPassword" component={ResetPassword} />
+        <SecuredRoute
+          path="/createHardware"
+          component={CreateHardwareRequest}
+        />
+        <SecuredRoute
+          path="/createSoftware"
+          component={CreateSoftwareRequest}
+        />
+        <SecuredRoute path="/createRemote" component={CreateRemoteRequest} />
       </div>
     </BrowserRouter>
   );

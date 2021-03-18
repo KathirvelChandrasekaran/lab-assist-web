@@ -29,7 +29,7 @@ const Navbar = () => {
           <Typography variant="h5" className={classes.title}>
             Lab Assist
           </Typography>
-          {localStorage.getItem("authState") === "true" ? (
+          {localStorage.getItem("authState") != null ? (
             <Button
               color="inherit"
               component={Link}

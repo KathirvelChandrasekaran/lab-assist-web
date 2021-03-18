@@ -21,8 +21,11 @@ export async function authentication(userName, password, role, props) {
           userName === doc.data()["userName"] &&
           password === doc.data()["password"]
         ) {
-          localStorage.setItem("authState", "true");
-          props.history.push("/home");
+          localStorage.setItem("authState", userName.toUpperCase());
+          props.history.push({
+            pathname: "/home",
+            userName: userName,
+          });
         } else return "studentFailed";
       }
     } else return "failed";
@@ -31,7 +34,7 @@ export async function authentication(userName, password, role, props) {
 
 export async function addUser(userName, password, props) {
   await db.collection("Students").add({
-    userName: userName,
+    userName: userName.toUpperCase(),
     password: password,
     role: "student",
   });

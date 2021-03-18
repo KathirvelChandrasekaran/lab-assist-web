@@ -210,7 +210,7 @@ const Admin = (props) => {
                               },
                             }}
                           >
-                            edit
+                            view
                           </Button>
                         </CardActions>
                       </Card>
@@ -285,7 +285,7 @@ const Admin = (props) => {
                               },
                             }}
                           >
-                            edit
+                            view
                           </Button>
                         </CardActions>
                       </Card>
@@ -353,7 +353,7 @@ const Admin = (props) => {
                               },
                             }}
                           >
-                            edit
+                            view
                           </Button>
                         </CardActions>
                       </Card>

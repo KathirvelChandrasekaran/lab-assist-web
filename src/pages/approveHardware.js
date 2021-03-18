@@ -127,21 +127,29 @@ export const ApproveHardware = (props) => {
                 </Typography>
               </CardContent>
             </CardActionArea>
-            <CardActions style={{ textAlign: "center" }}>
-              <Button
-                variant="contained"
-                type="submit"
-                style={{
-                  width: "15em",
-                  backgroundColor: "#D64550",
-                  color: "white",
-                }}
-                onClick={pushToHistory}
-              >
-                mark as done
-              </Button>
-              {loading ? <CircularProgress style={{ color: "#D64550" }} /> : ""}
-            </CardActions>
+            {props.location.state.type == "true" ? (
+              ""
+            ) : (
+              <CardActions style={{ textAlign: "center" }}>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  style={{
+                    width: "15em",
+                    backgroundColor: "#D64550",
+                    color: "white",
+                  }}
+                  onClick={pushToHistory}
+                >
+                  mark as done
+                </Button>
+                {loading ? (
+                  <CircularProgress style={{ color: "#D64550" }} />
+                ) : (
+                  ""
+                )}
+              </CardActions>
+            )}
           </Card>
         );
       })}
