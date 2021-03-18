@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -30,14 +30,35 @@ const Navbar = () => {
             Lab Assist
           </Typography>
           {localStorage.getItem("authState") != null ? (
-            <Button
-              color="inherit"
-              component={Link}
-              to="/login"
-              onClick={logout}
-            >
-              Logout
-            </Button>
+            localStorage.getItem("authState") === "admin" ? (
+              <Fragment>
+                <Button color="inherit" component={Link} to="/admin">
+                  Admin
+                </Button>
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to="/login"
+                  onClick={logout}
+                >
+                  Logout
+                </Button>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <Button color="inherit" component={Link} to="/home">
+                  Home
+                </Button>
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to="/login"
+                  onClick={logout}
+                >
+                  Logout
+                </Button>
+              </Fragment>
+            )
           ) : (
             <Button color="inherit" component={Link} to="/login">
               Login
