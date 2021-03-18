@@ -10,6 +10,9 @@ import ApproveRemote from "./pages/approveRemote";
 import ViewStudents from "./pages/viewStudents";
 import AddStudent from "./pages/addStudent";
 import ResetPassword from "./pages/resetPassword";
+import CreateHardwareRequest from "./pages/createHardwareRequest";
+import CreateSoftwareRequest from "./pages/createSoftwareRequest";
+import CreateRemoteRequest from "./pages/createRemoteAccess";
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
         <Route path="/viewStudents" component={ViewStudents} />
         <Route path="/addStudent" component={AddStudent} />
         <Route path="/resetPassword" component={ResetPassword} />
+        <Route path="/createHardware" component={CreateHardwareRequest} />
+        <Route path="/createSoftware" component={CreateSoftwareRequest} />
+        <Route path="/createRemote" component={CreateRemoteRequest} />
       </div>
     </BrowserRouter>
   );
