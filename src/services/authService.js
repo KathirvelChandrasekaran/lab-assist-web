@@ -12,7 +12,8 @@ export async function authentication(userName, password, role, props) {
           password === doc.data()["password"]
         ) {
           localStorage.setItem("authState", "admin");
-          props.history.push("/admin");
+          // props.history.push("/admin");
+          return "success";
         } else return "adminFailed";
       }
     } else if (role === "student") {
@@ -22,10 +23,11 @@ export async function authentication(userName, password, role, props) {
           password === doc.data()["password"]
         ) {
           localStorage.setItem("authState", userName.toUpperCase());
-          props.history.push({
-            pathname: "/home",
-            userName: userName,
-          });
+          // props.history.push({
+          //   pathname: "/home",
+          //   userName: userName,
+          // });
+          return "success";
         } else return "studentFailed";
       }
     } else return "failed";

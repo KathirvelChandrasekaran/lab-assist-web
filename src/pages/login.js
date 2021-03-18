@@ -1,8 +1,10 @@
 import { Input, makeStyles, Button, Radio } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import React, { useState } from "react";
-import { authentication } from "../services/authService";
 import auth from "../assets/auth.svg";
+import fire from "../config/firebase";
 
+const db = fire.firestore();
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -20,18 +22,49 @@ const Login = (props) => {
 
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [response, setResponse] = useState("");
   const [role, setRole] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (userName === "" || password === "" || role === "")
       alert("All fields are required");
     else authentication(userName, password, role, props);
   };
 
+  async function authentication(userName, password, role, props) {
+    const snapshot = await db.collection("Students").get();
+    snapshot.forEach((doc) => {
+      if (role === "admin") {
+        if (role === doc.data()["role"]) {
+          if (
+            userName === doc.data()["userName"] &&
+            password === doc.data()["password"]
+          ) {
+            localStorage.setItem("authState", "admin");
+            props.history.push("/admin");
+          } else setResponse("Invalid Credentials");
+        }
+      } else if (role === "student") {
+        if (role === doc.data()["role"]) {
+          if (
+            userName === doc.data()["userName"] &&
+            password === doc.data()["password"]
+          ) {
+            localStorage.setItem("authState", userName.toUpperCase());
+            props.history.push({
+              pathname: "/home",
+              userName: userName,
+            });
+          } else setResponse("Invalid Credentials");
+        }
+      } else setResponse("Invalid Credentials");
+    });
+  }
+
   return (
     <div>
-      <div style={{ margin: "5em" }}>
+      <div style={{ marginTop: "5em" }}>
         <img style={{ height: "10em" }} src={auth} alt="" />
       </div>
       <div style={{ margin: "5em" }}>
@@ -91,6 +124,15 @@ const Login = (props) => {
           >
             Login
           </Button>
+          {response == "" ? (
+            ""
+          ) : (
+            <div
+              style={{ marginLeft: "27em", marginTop: "0.5em", width: "15em" }}
+            >
+              <Alert severity="error">{response}</Alert>
+            </div>
+          )}
         </form>
       </div>
     </div>
