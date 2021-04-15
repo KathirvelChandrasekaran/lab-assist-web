@@ -127,7 +127,7 @@ export const ApproveSoftware = (props) => {
                 </Typography>
               </CardContent>
             </CardActionArea>
-            {props.location.state.type == "true" ? (
+            {props.location.state.type === "true" ? (
               ""
             ) : (
               <CardActions style={{ textAlign: "center" }}>

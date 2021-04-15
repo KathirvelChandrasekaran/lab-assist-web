@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+
 import { Box } from "@material-ui/core";
 import fire from "../config/firebase";
 import userImg from "../assets/users.svg";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    // width: "100%",
-  },
-  gridList: {
-    flexWrap: "nowrap",
-    transform: "translateZ(0)",
-  },
-}));
 const ViewStudents = () => {
   const [users, setUsers] = useState([]);
-  const classes = useStyles();
   const db = fire.firestore();
 
   useEffect(() => {

@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
 const Login = (props) => {
   const classes = useStyles();
 
+  const [accountNumber, setAccountNumber] = useState("");
+  const [PIN, setPIN] = useState("");
+
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [response, setResponse] = useState("");
