@@ -42,3 +42,10 @@ export async function addUser(userName, password, props) {
   });
   props.history.push("/admin");
 }
+
+export async function resetPassword(userName, props) {
+  await db.collection("PasswordRequests").add({
+    userName: userName,
+  });
+  props.history.push("/login");
+}

@@ -13,6 +13,7 @@ import ResetPassword from "./pages/resetPassword";
 import CreateHardwareRequest from "./pages/createHardwareRequest";
 import CreateSoftwareRequest from "./pages/createSoftwareRequest";
 import CreateRemoteRequest from "./pages/createRemoteAccess";
+import RequestPassword from "./pages/requestsPassword";
 
 const authentication = {
   isLoggedIn: localStorage.getItem("authState"),
@@ -56,6 +57,7 @@ function App() {
       <div className="App">
         <Navbar />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/requestPassword" component={RequestPassword} />
         <SecuredAdminRoute path="/admin" component={Admin} />
         <SecuredRoute path="/home" component={Home} />
         <SecuredRoute path="/approveHardware" component={ApproveHardware} />

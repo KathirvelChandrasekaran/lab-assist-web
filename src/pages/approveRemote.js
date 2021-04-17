@@ -8,6 +8,9 @@ import {
   CardMedia,
   Button,
   CircularProgress,
+  Input,
+  FormControlLabel,
+  FormGroup,
 } from "@material-ui/core";
 import fire from "../config/firebase";
 import remoteA from "../assets/remote.svg";
@@ -28,6 +31,8 @@ export const ApproveRemote = (props) => {
   const [ID, setID] = useState();
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
+  const [pcID, setPCID] = useState("");
+  const [pass, setPass] = useState("");
 
   useEffect(() => {
     const rm = [];
@@ -51,10 +56,9 @@ export const ApproveRemote = (props) => {
     {
       remote.map((data) => {
         db.collection("RemoteAccessResponse")
-
           .add({
-            reason: data.reason,
-            userName: data.userName,
+            pcID: data.reason,
+            password: data.userName,
           })
           .then((value) =>
             db.collection("History").add({
@@ -100,29 +104,54 @@ export const ApproveRemote = (props) => {
                 </Typography>
               </CardContent>
             </CardActionArea>
-            {props.location.state.type === "true" ? (
-              ""
-            ) : (
-              <CardActions style={{ textAlign: "center" }}>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  style={{
-                    width: "15em",
-                    backgroundColor: "#D64550",
-                    color: "white",
-                  }}
-                  onClick={pushToHistory}
-                >
-                  mark as done
-                </Button>
-                {loading ? (
-                  <CircularProgress style={{ color: "#D64550" }} />
-                ) : (
-                  ""
-                )}
-              </CardActions>
-            )}
+            <form>
+              <Input
+                placeholder="PCID"
+                name="pcID"
+                value={pcID}
+                style={{ width: "30em" }}
+                required="true"
+                inputProps={{ "aria-label": "description" }}
+                onChange={(e) => setPCID(e.target.value)}
+              />
+              <br />
+              <br />
+              <Input
+                style={{ width: "30em" }}
+                value={pass}
+                name="password"
+                placeholder="Password"
+                type="password"
+                required="true"
+                inputProps={{ "aria-label": "description" }}
+                onChange={(e) => setPass(e.target.value)}
+              />
+              <br />
+              <br />
+              {props.location.state.type === "true" ? (
+                ""
+              ) : (
+                <CardActions style={{ textAlign: "center" }}>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    style={{
+                      width: "15em",
+                      backgroundColor: "#D64550",
+                      color: "white",
+                    }}
+                    onClick={pushToHistory}
+                  >
+                    mark as done
+                  </Button>
+                  {loading ? (
+                    <CircularProgress style={{ color: "#D64550" }} />
+                  ) : (
+                    ""
+                  )}
+                </CardActions>
+              )}
+            </form>
           </Card>
         );
       })}

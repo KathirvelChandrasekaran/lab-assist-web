@@ -138,6 +138,18 @@ const Login = (props) => {
           )}
         </form>
       </div>
+      <Button
+        variant="contained"
+        type="submit"
+        onClick={() => props.history.push("/requestPassword")}
+        style={{
+          width: "20em",
+          backgroundColor: "blue",
+          color: "white",
+        }}
+      >
+        Forgot password
+      </Button>
     </div>
   );
 };
